@@ -19,3 +19,7 @@ function onCounterChange(value) {
     changeCounter(value)
     showResult()
 }
+
+function helloWorld() {
+    console.log("hello world");
+}
