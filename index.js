@@ -5,6 +5,7 @@ const colorlist = ["red", "blue", "green","pink","yellow"]
 document.getElementById("count-el").innerText = count;
 
 
+
 function showResult() {
     document.getElementById("count-el").innerText = count;
     document.getElementById("count-el").style.color = colorlist[count%5];
@@ -20,6 +21,17 @@ function onCounterChange(value) {
     showResult()
 }
 
-function helloWorld() {
-    console.log("hello world");
+function save() {
+    let lastCount = count + "/"
+    document.getElementById("save").textContent += lastCount
+    console.log(count)
+}
+
+function reset() {
+    count = 0
+    showResult()
+}
+
+function resetHis() {
+    document.getElementById("save").innerText = ""
 }
