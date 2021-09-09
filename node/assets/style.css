@@ -1,0 +1,4 @@
+body{background: skyblue; font-family: Verdana, Geneva, Tahoma, sans-serif; color: #fff; padding: 30px;}
+h1{font-size: 48px; text-transform: uppercase; letter-spacing: 2px; text-align: center;}
+p, li{font-size: 25px; text-align: center; text-transform: capitalize; list-style-position: inside;}
+ul{padding-right: 2%;}

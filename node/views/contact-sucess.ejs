@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- <link rel="stylesheet" href="assets/style.css" type="text/css"> -->
+        <style>
+            body{background: skyblue; font-family: Verdana, Geneva, Tahoma, sans-serif; color: #fff; padding: 30px;}
+            h1{font-size: 48px; text-transform: uppercase; letter-spacing: 2px; text-align: center;}
+            p, li{font-size: 25px; text-align: center; text-transform: capitalize; list-style-position: inside;}
+            ul{padding-right: 2%;}
+            form{width: 400px; max-width: 100%; padding: 20px; margin: 20px auto;}
+            input{display: block; margin: 10px 0; padding: 10px; width: 100%;}
+            input[type='submit']{width: auto;}
+        </style>
+    </head>
+    <body>
+        <%- include('partials/nav.ejs'); %>
+        <h1>contact us here</h1>
+        <p>Thanks for contacting us</p>
+        <p>You have contacted <%= data.who %> from the <%= data.department %> department</p>
+        <p>We will get back to you at <%= data.email %></p>
+        </form>
+    </body>
+</html>

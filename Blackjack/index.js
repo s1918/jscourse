@@ -2,6 +2,40 @@ let player = {
     name: "Per",
     chips: 145
 }
+
+// class EventEmitter{
+//     constructor(){
+//         this.eventCallbacks = {};
+//     }
+
+//     registerEvent(eventName, callback){
+//         this.eventCallbacks[eventName] = callback;
+//     }
+
+//     emit(eventName, parameter){
+//         const functionToBeCalled = this.eventCallbacks[eventName];
+//         functionToBeCalled(parameter);
+//     }
+// }
+
+// class Player extends EventEmitter{
+//     contrtructor(playerId){
+//         this.cards = [];
+//         this.sum = 0;
+//         this.won = false;
+//         this.stood = false;
+//     }
+
+//     getSum() {
+//         return this.cards.reduce((sum, card) => sum += card, 0);;
+//     }
+
+//     getNewCard() {
+//         this.cards.push(getRandomCard());
+//         this.sum = this.getSum();
+//         this.emit("sumChanged");
+//     }
+// }
 let playerCard = []
 let dealerCard = []
 let sum = 0
@@ -16,6 +50,7 @@ let dealerSumEl = document.getElementById("dealerSum-el")
 let cardEl = document.getElementById("card-el")
 let playerEl = document.getElementById("player-el")
 let dealerEl = document.getElementById("dealer=el")
+let playerStood = false
 
 playerEl.textContent = player.name + ": $" + player.chips
 
@@ -31,6 +66,7 @@ function getRandomCard() {
 }
 
 function reset() {
+    playerStood = false
     playerCard = []
     dealerCard = []
     hasBlackJack = false
@@ -41,6 +77,14 @@ function reset() {
 
 function startGame() {
     reset()
+    const player1 = new Player(1);
+    const dealer = new Player(2);
+    player1.getNewCard();
+    player1.getNewCard();
+    dealer.getNewCard();
+    // player1.registerEvent('sumChanged', () => {
+    //     cardEl.textContent = player1.getSum();
+    // })
     isAlive = true
     let firstCard = getRandomCard()
     let secondCard = getRandomCard()
@@ -53,17 +97,16 @@ function startGame() {
     renderGame()
 }
 
-function renderGame() {
+const getCardListMsg = (cardList, initMsg) => cardList.reduce((acc,ele) => acc += ele + " ", initMsg);
+
+const renderGame = () => {
     sumEl.textContent = "Sum: " + sum
-    cardEl.textContent = "Your cards: "
-    dealerEl.textContent = "Dealer Cards: "
     dealerSumEl.textContent = "Dealer Sum: " + dealerSum 
-    for (let i = 0; i < playerCard.length; i++) {
-        cardEl.textContent += playerCard[i] + " "
-    }
-    for (let i = 0; i < dealerCard.length; i++) {
-        dealerEl.textContent += dealerCard[i] + " "
-    }
+    cardEl.textContent = getCardListMsg(playerCard, "Your Cards: ");
+    dealerEl.textContent = getCardListMsg(dealerCard, "Dealer Cards: ")
+    // for (let i = 0; i < dealerCard.length; i++) {
+    //     dealerEl.textContent += dealerCard[i] + " "
+    // }
     if (sum < 21) {
         message = "Want another?"
     } else if (sum === 21) {
@@ -79,7 +122,7 @@ function renderGame() {
     } else if (dealerSum === 21) {
         message = "Dealer Wins!"
         dealerWin = true
-    } else if (dealerSum < 21 && dealerSum > sum) {
+    } else if (playerStood && dealerSum < 21 && dealerSum > sum) {
         message = "Dealer Wins!"
         dealerWin = true
     }
@@ -103,6 +146,7 @@ function newCard () {
 function stand () {
     while (isAlive === true && dealerWin === false && dealerSum <= sum && dealerSum <= 21) {
         let dNewCard = getRandomCard()
+        playerStood = true
         dealerSum += dNewCard
         dealerCard.push(dNewCard)
         renderGame()
